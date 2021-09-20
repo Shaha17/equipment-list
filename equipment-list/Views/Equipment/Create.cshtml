@@ -1,0 +1,72 @@
+﻿@model Equipment
+@{
+    ViewData["Title"] = "Добавление оборудования";
+}
+
+<style>
+    input[type='number'] {
+        -moz-appearance: textfield;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">
+            @ViewData["Title"]
+        </div>
+    </div>
+    <a></a>
+    <div class="card-body">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <img src="" id="photo" style="max-width: 20rem; max-height: 20rem" alt="">
+            </div>
+            @* <div asp-validation-summary="All"></div> *@
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Type"></label>
+                <input asp-for="Type" class="form-control">
+                <span asp-validation-for="Type"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DeliveryDate"></label>
+                <input asp-for="DeliveryDate" class="form-control">
+                <span asp-validation-for="DeliveryDate"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResponsiblePersonFullName"></label>
+                <input asp-for="ResponsiblePersonFullName" class="form-control">
+                <span asp-validation-for="ResponsiblePersonFullName"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MountingLocation"></label>
+                <input asp-for="MountingLocation" class="form-control">
+                <span asp-validation-for="MountingLocation"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script>
+    $(document).ready(() => {
+        $('select').select()
+    });
+</script>
+}

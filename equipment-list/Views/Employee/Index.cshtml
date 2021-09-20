@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Список сотрудников";
+}
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Mvc.Bootstrap4.Core;
+
+@model List<Employee>
+
+<div class="text-center">
+    <h1 class="display-4">Список сотрудников</h1>
+
+</div>
+<table id="table" class="table table-hover table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Должность</th>
+            <th>Подразделение</th>
+            <th>Дата приёма на работу</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var emp in Model)
+        {
+            var routeData = new Dictionary<string, string>
+        {
+        {"id", emp.Id.ToString() },
+
+        };
+            <tr>
+                <td>@(emp.LastName)</td>
+                <td>@(emp.FirstName)</td>
+                <td>@(emp.MiddleName)</td>
+                <td>@(emp.Position)</td>
+                <td>@(emp.Department)</td>
+                <td>@(emp.HiringDate.ToShortDateString())</td>
+                <td>
+                    <a asp-controller="Employee" asp-action="Delete" asp-all-route-data="routeData"
+                    class="btn btn-sm btn-danger">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+<script>
+    $(document).ready(function () {
+        $('#table').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    className: 'btn btn-default',
+                    exportOptions: {
+                        columns: 'th:not(:last-child)'
+                    }
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn btn-default',
+                    exportOptions: {
+                        columns: 'th:not(:last-child)'
+                    }
+
+                },
+                {
+                    extend: 'copy',
+                    className: 'btn btn-default',
+                    exportOptions: {
+                        columns: 'th:not(:last-child)'
+                    }
+
+                },
+                {
+                    extend: 'pdf',
+                    className: 'btn btn-default',
+                    exportOptions: {
+                        columns: 'th:not(:last-child)'
+                    }
+                },
+                {
+                    extend: 'print',
+                    className: 'btn btn-default',
+                    exportOptions: {
+                        columns: 'th:not(:last-child)'
+                    }
+                }
+            ],
+            language: {
+                "decimal": ".",
+                "emptyTable": "Нет данных в таблице",
+                "info": "Показано с _START_ до _END_ из _TOTAL_",
+                "infoEmpty": "Показано с 0 до 0 из 0 ",
+                "infoFiltered": "(отфильтровано из _MAX_)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Показать _MENU_ на одной странице",
+                "loadingRecords": "Загрузка...",
+                "processing": "Загрузка...",
+                "search": "Поиск:",
+                "zeroRecords": "Нет подходящих записей",
+                "paginate": {
+                    "first": "Первая",
+                    "last": "Последняя",
+                    "next": "Следующая",
+                    "previous": "Предыдущая"
+                },
+                "aria": {
+                    "sortAscending": ": activate to sort column ascending",
+                    "sortDescending": ": activate to sort column descending"
+                }
+            },
+            lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Все"]]
+
+        }
+        )
+
+    })
+</script>
+}
